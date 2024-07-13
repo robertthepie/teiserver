@@ -4,7 +4,7 @@ defmodule Teiserver.Coordinator.RikerssMemes do
   alias Teiserver.Lobby.{ChatLib}
   alias Teiserver.Data.Types, as: T
 
-  @meme_list ~w(ticks nodefence nodefence2 greenfields poor rich hardt1 crazy undo deathmatch noscout hoversonly nofusion armonly coronly legonly armvcor)
+  @meme_list ~w(ticks nodefence nodefence2 greenfields poor rich hardt1 crazy undo deathmatch noscout nofusion armonly coronly legonly armvcor)
 
   @crazy_multiplier_opts ~w(0.3 0.5 0.7 1 1 1 1 1 1 1 1.5 2 4)
   @crazy_multiplier_opts_middler ~w(0.5 0.7 1 1 1 1 1 1 1 1.5 2)
@@ -233,29 +233,6 @@ defmodule Teiserver.Coordinator.RikerssMemes do
     ]
   end
 
-  def handle_meme("hoversonly", senderid, %{lobby_id: lobby_id} = _state) do
-    sender = Account.get_user_by_id(senderid)
-
-    new_options = %{
-      "game/modoptions/tweakdefs" =>
-        "bG9jYWwgZnVuY3Rpb24gZEMoU1QsIGNvcCkKCWNvcD1jb3Agb3Ige30KCWxvY2FsIE5UPXt9Cgljb3BbU1RdPU5UCglmb3IgaywgdiBpbiBwYWlycyhTVCkgZG8KCQlpZiB0eXBlKHYpPT0idGFibGUiIHRoZW4KCQkJaWYgTlRba109PW5pbCB0aGVuIE5UW2tdPXt9IGVuZAoJCQlOVFtrXT1jb3Bbdl0gb3IgZEModiwgY29wKQoJCWVsc2UgTlRba109diBlbmQKCWVuZAoJcmV0dXJuIE5UCmVuZApsb2NhbCB1ZCA9IFVuaXREZWZzCmZvciBjb20saW5mIGluIHBhaXJzKHthcm1jb209eyJhcm0iLCJhcm1jaCJ9LGNvcmNvbT17ImNvciIsImNvcmNoIn0sfSkgZG8KCWxvY2FsIHRlbXAgPSBkQyh1ZFtjb21dLmJ1aWxkb3B0aW9ucykKCWxvY2FsIHRlbXAyID0gZEModWRbY29tXS5jdXN0b21wYXJhbXMpCgl1ZFtjb21dPWRDKHVkW2luZlsyXV0pCgl1ZFtjb21dLmJ1aWxkb3B0aW9ucyA9IHRlbXAKCXVkW2NvbV0uY3VzdG9tcGFyYW1zID0gdGVtcDIKCXVkW2NvbV0uaWNvbnR5cGU9aW5mWzFdLi4iY29tbWFuZGVyIgoJdWRbY29tXS5zb3VuZHMudW5kZXJhdHRhY2s9Indhcm5pbmcyIgoJdWRbY29tXS5zb3VuZHMuc2VsZWN0PXtbMV09aW5mWzFdLi4iY29tc2VsIn0KCWZvciBwYXJtLCB2YWwgaW4gcGFpcnMoe3JlY2xhaW1hYmxlPWZhbHNlLHdvcmtlcnRpbWU9MzAwLG1ldGFsbWFrZT0yLG1ldGFsc3RvcmFnZT01MDAsZW5lcmd5bWFrZT0yNSxlbmVyZ3lzdG9yYWdlPTUwMCxoZWFsdGg9MzcwMCxhdXRvaGVhbD01LHNob3dwbGF5ZXJuYW1lPXRydWUsY2FubWFudWFsZmlyZT10cnVlLH0pIGRvCgkJdWRbY29tXVtwYXJtXSA9IHZhbAoJZW5kCmVuZAp1ZC5sZWdjb20gPSBkQyh1ZC5jb3Jjb20p"
-    }
-
-    cor_not_hover_fac =
-      ~w(corsy corlab corvp corap coramsub corplat coravp coralab corasy coraap corgantuw corgant)
-
-    arm_not_hover_fac =
-      ~w(armsy armlab armvp armap armamsub armplat armalab armavp armaap armasy armshltx armshltxuw)
-
-    leg_not_hover_fac = ~w(leglab legvp legap legalab legavp legaap leggant)
-    Battle.set_modoptions(lobby_id, new_options)
-    Battle.disable_units(lobby_id, cor_not_hover_fac ++ arm_not_hover_fac ++ leg_not_hover_fac)
-
-    [
-      "#{sender.name} has enabled the Hovers Only meme. In this game you will be limited to hovers only, including your commander; good luck!"
-    ]
-  end
-
   def handle_meme("nofusion", senderid, %{lobby_id: lobby_id} = _state) do
     sender = Account.get_user_by_id(senderid)
     fusion_units = ~w(armfus armafus armuwfus armckfus corfus corafus coruwfus)
@@ -362,7 +339,6 @@ defmodule Teiserver.Coordinator.RikerssMemes do
       "game/modoptions/multiplier_maxvelocity" => "1",
       "game/modoptions/multiplier_losrange" => "1",
       "game/modoptions/multiplier_radarrange" => "1",
-      "game/modoptions/tweakdefs" => "ZG8gZW5k",
       "game/modoptions/experimentallegionfaction" => "0",
       "game/modoptions/faction_limiter" => "0"
     }
